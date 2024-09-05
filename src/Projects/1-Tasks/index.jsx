@@ -4,9 +4,9 @@ import TaskBox from "./TaskBox";
 import { AnimatePresence, motion } from "framer-motion";
 import "../../Css_Files/1-Tasks.css";
 import AlertBox from "./AlertBox";
+import { div } from "framer-motion/m";
 
 export default function Tasks() {
-  const filter_list = ["All", "Incomplate", "Draft", "Complated"];
   const [activeFilterIndex, setActiveFilterIndex] = useState(0);
   const [taskBoxIsOpen, setTaskBoxIsOpen] = useState(false);
   const [alertBoxIsOpen, setAlertBoxIsOpen] = useState(false);
@@ -17,6 +17,23 @@ export default function Tasks() {
   const statusBar = [0, 1, 2];
   const [changeStatus, setChangeStatus] = useState(false);
   const [alertBoxData, setAlertBoxData] = useState(false);
+  const [lengthOfStatus, setLengthOfStatus] = useState({
+    all: 0,
+    incomplate: 0,
+    draft: 0,
+    complate: 0,
+  });
+  const filter_list = ["All", "Incomplate", "Draft", "Complated"];
+  const lengthOfStatusList = [
+    lengthOfStatus.all,
+    lengthOfStatus.incomplate,
+    lengthOfStatus.draft,
+    lengthOfStatus.complate,
+  ];
+
+  const [searchPanelIsOpen, setSearchPanelIsOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [searchTasks, setSearchTasks] = useState([]);
 
   useEffect(() => {
     document.querySelector("html").style.overflowY = "auto";
@@ -41,6 +58,12 @@ export default function Tasks() {
     setActiveFilterIndex(0);
     setFilteredTasks(tasks);
     localStorage.setItem("bhy-tasks", JSON.stringify(tasks));
+    setLengthOfStatus({
+      all: tasks.length,
+      incomplate: tasks.filter((task) => task.activeStatusIndex === 0).length,
+      draft: tasks.filter((task) => task.activeStatusIndex === 1).length,
+      complate: tasks.filter((task) => task.activeStatusIndex === 2).length,
+    });
   }, [tasks]);
 
   useEffect(() => {
@@ -89,6 +112,22 @@ export default function Tasks() {
     document.querySelector("html").style.overflowY = "auto";
   };
 
+  const openSearchPanel = () => {
+    setSearchPanelIsOpen(true);
+  };
+
+  const closeSearchPanel = () => {
+    setSearchPanelIsOpen(false);
+  };
+
+  useEffect(() => {
+    const filteredTasks = tasks.filter((task) =>
+      task.task_title.toLowerCase().includes(searchInput.trim().toLowerCase())
+    );
+
+    setSearchTasks(filteredTasks);
+  }, [searchInput, tasks]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -123,7 +162,7 @@ export default function Tasks() {
       </AnimatePresence>
       <header className="text-5xl font-medium text-slate-200">TASK LIST</header>
       <div className="w-[800px] flex flex-col gap-5">
-        <div className="flex items-center justify-between">
+        <div className="grid items-center controlGrid gap-2.5">
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => {
@@ -143,31 +182,90 @@ export default function Tasks() {
               Remove All Tasks
             </button>
           </div>
-          <div className="h-12 flex">
-            {filter_list.map((myFilter, i) => (
-              <button
-                onClick={() => changeFilter(i)}
-                key={i}
+          <div className="relative">
+            <div className="absolute w-9 h-9 rounded-lg bg-indigo-800 text-white text-lg flex items-center justify-center left-1.5 top-1/2 -translate-y-1/2">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input
+              onFocus={openSearchPanel}
+              onBlur={closeSearchPanel}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              type="text"
+              placeholder="Search Task..."
+              className="h-12 w-full rounded-lg bg-gradient-to-r to-slate-800 from-black px-2.5 pl-12 border-2 border-solid border-slate-600 focus:border-indigo-600 duration-200 text-white"
+            />
+            <AnimatePresence>
+              {searchPanelIsOpen && (
+                <motion.div
+                  initial={{ opacity: 0, top: 48 }}
+                  animate={{ opacity: 1, top: 64 }}
+                  exit={{ opacity: 0, top: 48 }}
+                  className="absolute min-h-20 max-h-80 overflow-y-auto overflow-x-hidden w-full border-2 border-solid border-slate-500 left-0 top-16 rounded-lg bg-gradient-to-tr to-slate-800 from-black text-white p-3 z-10 grid grid-cols-1 gap-1.5"
+                >
+                  {searchTasks.length > 0
+                    ? searchTasks.map((st, i) => (
+                        <div
+                          key={i}
+                          className="w-full h-12 rounded-lg bg-gray-700 bg-opacity-60 shadow-sm flex items-center justify-between px-2.5 text-sm"
+                        >
+                          <header>{st.task_title}</header>
+                          <div className="flex items-center gap-2.5 taskButtons duration-500">
+                            <button
+                              onClick={() => {
+                                setType("update");
+                                setUpdateTaskData(st);
+                                setTaskBoxIsOpen(true);
+                              }}
+                              className="flex items-center justify-center bg-slate-700 p-2.5 rounded-lg text-indigo-500 hover:text-indigo-600 hover:bg-slate-800 border-2 border-solid border-transparent hover:border-indigo-600 shadow-lg duration-200"
+                            >
+                              <i className="fa-solid fa-pen"></i>
+                            </button>
+                            <button
+                              onClick={() =>
+                                openAlertBox(st.id, st.task_title, st.task_desc)
+                              }
+                              className="flex items-center justify-center bg-slate-700 p-2.5 rounded-lg text-red-500 hover:text-red-600 hover:bg-slate-800 border-2 border-solid border-transparent hover:border-red-600 shadow-lg duration-200"
+                            >
+                              <i className="fa-solid fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    : "Not found task!"}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div className="grid items-center grid-cols-4 mt-10">
+          {filter_list.map((myFilter, i) => (
+            <button
+              onClick={() => changeFilter(i)}
+              key={i}
+              className={classNames(
+                "h-12 px-5 border-b-2 border-solid border-b-gray-900 text-gray-500 hover:text-gray-400 text-lg duration-200 flex gap-2.5 justify-center items-center",
+                {
+                  "!text-white !border-b-white": i === activeFilterIndex,
+                }
+              )}
+            >
+              <header>{myFilter}</header>
+              <span
                 className={classNames(
-                  "h-full px-5 border-b-2 border-solid border-b-gray-900 text-gray-500 hover:text-gray-400 text-lg duration-200",
+                  "text-white min-w-8 h-8 p-3 flex items-center justify-center rounded-full bg-indigo-600 opacity-50",
                   {
-                    "!text-white !border-b-white": i === activeFilterIndex,
+                    "!opacity-100": i === activeFilterIndex,
                   }
                 )}
               >
-                {myFilter}
-              </button>
-            ))}
-          </div>
+                {lengthOfStatusList[i]}
+              </span>
+            </button>
+          ))}
         </div>
-        <div className="flex items-center justify-end">
-          <div className="flex items-center gap-1">
-            <span className="text-slate-400 font-medium">Number of Tasks</span>
-            <span className="text-white min-w-8 h-8 flex items-center justify-center rounded-lg bg-gradient-to-tr to-blue-700 from-indigo-600">
-              {tasks.length}
-            </span>
-          </div>
-        </div>
+
         <div className="flex flex-col gap-2.5">
           {filteredTasks.length > 0 &&
             filteredTasks.map((task, i) => (
@@ -212,7 +310,7 @@ export default function Tasks() {
                       setUpdateTaskData(task);
                       setTaskBoxIsOpen(true);
                     }}
-                    className="flex items-center justify-center bg-slate-500 p-2.5 rounded-lg text-indigo-300 hover:text-indigo-500 hover:bg-slate-700 shadow-lg duration-200"
+                    className="flex items-center justify-center bg-slate-700 p-2.5 rounded-lg text-indigo-500 hover:text-indigo-600 border-2 border-solid border-transparent hover:border-indigo-600 hover:bg-slate-800 shadow-lg duration-200"
                   >
                     <i className="fa-solid fa-pen"></i>
                   </button>
@@ -220,7 +318,7 @@ export default function Tasks() {
                     onClick={() =>
                       openAlertBox(task.id, task.task_title, task.task_desc)
                     }
-                    className="flex items-center justify-center bg-slate-500 p-2.5 rounded-lg text-red-300 hover:text-red-500 hover:bg-slate-700 shadow-lg duration-200"
+                    className="flex items-center justify-center bg-slate-700 p-2.5 rounded-lg text-red-500 hover:text-red-600 hover:bg-slate-800 border-2 border-solid border-transparent hover:border-red-600  shadow-lg duration-200"
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>
