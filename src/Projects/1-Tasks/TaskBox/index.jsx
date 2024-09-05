@@ -49,9 +49,11 @@ export default function TaskBox({
         task.task_title = myTaskData.task_title;
         task.task_desc = myTaskData.task_desc;
         task.activeStatusIndex = myTaskData.activeStatusIndex;
+        task.id = myTaskData.id;
       }
     });
     setTasks(tasks);
+    localStorage.setItem("bhy-tasks", JSON.stringify(tasks));
     closeTaskBox();
   };
 
@@ -76,7 +78,7 @@ export default function TaskBox({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex z-20 items-center justify-center bg-black bg-opacity-20 w-full h-screen fixed left-0 top-0"
+      className="flex z-20 items-center justify-center bg-slate-950 bg-opacity-30 w-full h-screen fixed left-0 top-0"
     >
       <form
         onSubmit={formSubmit}

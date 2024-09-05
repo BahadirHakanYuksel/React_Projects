@@ -3,32 +3,39 @@ import React, { useEffect, useState } from "react";
 import TaskBox from "./TaskBox";
 import { AnimatePresence, motion } from "framer-motion";
 import "../../Css_Files/1-Tasks.css";
+import AlertBox from "./AlertBox";
 
 export default function Tasks() {
   const filter_list = ["All", "Incomplate", "Draft", "Complated"];
   const [activeFilterIndex, setActiveFilterIndex] = useState(0);
   const [taskBoxIsOpen, setTaskBoxIsOpen] = useState(false);
+  const [alertBoxIsOpen, setAlertBoxIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [type, setType] = useState("add");
   const [updateTaskData, setUpdateTaskData] = useState(false);
   const statusBar = [0, 1, 2];
   const [changeStatus, setChangeStatus] = useState(false);
+  const [alertBoxData, setAlertBoxData] = useState(false);
 
   useEffect(() => {
     document.querySelector("html").style.overflowY = "auto";
     JSON.parse(localStorage.getItem("bhy-tasks")) !== null &&
       setTasks(JSON.parse(localStorage.getItem("bhy-tasks")));
+
+    const handleEnter = (event) => {
+      if (event.key === "Enter") {
+        setType("add");
+        setTaskBoxIsOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
   }, []);
-
-  const changeFilter = (index) => {
-    setActiveFilterIndex(index);
-  };
-
-  const closeTaskBox = () => {
-    setTaskBoxIsOpen(false);
-    document.querySelector("html").style.overflowY = "auto";
-  };
 
   useEffect(() => {
     setActiveFilterIndex(0);
@@ -47,6 +54,20 @@ export default function Tasks() {
     }
   }, [activeFilterIndex]);
 
+  useEffect(() => {
+    setFilteredTasks(tasks);
+    localStorage.setItem("bhy-tasks", JSON.stringify(tasks));
+  }, [changeStatus]);
+
+  const changeFilter = (index) => {
+    setActiveFilterIndex(index);
+  };
+
+  const closeTaskBox = () => {
+    setTaskBoxIsOpen(false);
+    document.querySelector("html").style.overflowY = "auto";
+  };
+
   const updateStatus = (index, id) => {
     tasks.forEach((task) => {
       if (task.id === id) {
@@ -58,15 +79,15 @@ export default function Tasks() {
     setChangeStatus(!changeStatus);
   };
 
-  const deleteTask = (id) => {
-    const newTasksAfterDeletedOneTask = tasks.filter((task) => task.id !== id);
-    setTasks(newTasksAfterDeletedOneTask);
+  const openAlertBox = (id, title, desc, type = "del") => {
+    setAlertBoxData({ title, id, desc, type });
+    setAlertBoxIsOpen(true);
   };
 
-  useEffect(() => {
-    setFilteredTasks(tasks);
-    localStorage.setItem("bhy-tasks", JSON.stringify(tasks));
-  }, [changeStatus]);
+  const closeAlertBox = () => {
+    setAlertBoxIsOpen(false);
+    document.querySelector("html").style.overflowY = "auto";
+  };
 
   return (
     <motion.div
@@ -87,18 +108,41 @@ export default function Tasks() {
           />
         )}
       </AnimatePresence>
+      <AnimatePresence>
+        {alertBoxIsOpen && (
+          <AlertBox
+            closeAlertBox={closeAlertBox}
+            taskId={alertBoxData.id}
+            taskTitle={alertBoxData.title}
+            taskDesc={alertBoxData.desc}
+            tasks={tasks}
+            setTasks={setTasks}
+            type={alertBoxData.type}
+          />
+        )}
+      </AnimatePresence>
       <header className="text-5xl font-medium text-slate-200">TASK LIST</header>
       <div className="w-[800px] flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          <button
-            onClick={() => {
-              setType("add");
-              setTaskBoxIsOpen(true);
-            }}
-            className="text-lg font-medium bg-blue-600 hover:bg-indigo-600 rounded-lg h-12 w-32 text-white duration-200 shadow-xl shadow-slate-800"
-          >
-            Add Task
-          </button>
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => {
+                setType("add");
+                setTaskBoxIsOpen(true);
+              }}
+              className="text-lg font-medium bg-blue-600 hover:bg-indigo-600 rounded-lg h-12 w-32 text-white duration-200 shadow-xl shadow-slate-800"
+            >
+              Add Task
+            </button>
+            <button
+              onClick={() => {
+                openAlertBox("", "", "", "allDel");
+              }}
+              className="text-base font-medium bg-red-800 hover:bg-red-900 rounded-lg h-12 w-36 text-white duration-200 shadow-xl shadow-slate-800"
+            >
+              Remove All Tasks
+            </button>
+          </div>
           <div className="h-12 flex">
             {filter_list.map((myFilter, i) => (
               <button
@@ -114,6 +158,14 @@ export default function Tasks() {
                 {myFilter}
               </button>
             ))}
+          </div>
+        </div>
+        <div className="flex items-center justify-end">
+          <div className="flex items-center gap-1">
+            <span className="text-slate-400 font-medium">Number of Tasks</span>
+            <span className="text-white min-w-8 h-8 flex items-center justify-center rounded-lg bg-gradient-to-tr to-blue-700 from-indigo-600">
+              {tasks.length}
+            </span>
           </div>
         </div>
         <div className="flex flex-col gap-2.5">
@@ -165,7 +217,9 @@ export default function Tasks() {
                     <i className="fa-solid fa-pen"></i>
                   </button>
                   <button
-                    onClick={() => deleteTask(task.id)}
+                    onClick={() =>
+                      openAlertBox(task.id, task.task_title, task.task_desc)
+                    }
                     className="flex items-center justify-center bg-slate-500 p-2.5 rounded-lg text-red-300 hover:text-red-500 hover:bg-slate-700 shadow-lg duration-200"
                   >
                     <i className="fa-solid fa-trash"></i>
