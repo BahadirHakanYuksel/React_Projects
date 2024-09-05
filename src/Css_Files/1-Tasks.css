@@ -1,0 +1,9 @@
+.task > .taskButtons {
+  visibility: hidden;
+  opacity: 0%;
+}
+
+.task:hover > .taskButtons {
+  visibility: visible;
+  opacity: 100%;
+}
