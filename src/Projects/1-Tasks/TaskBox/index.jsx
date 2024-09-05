@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 
 export default function TaskBox({
@@ -17,6 +17,7 @@ export default function TaskBox({
     task_desc: "",
     id: nanoid(),
   });
+  const titleRef = useRef();
   useEffect(() => {
     if (type === "update") {
       setMyTaskData(updateTaskData);
@@ -30,7 +31,7 @@ export default function TaskBox({
     };
 
     window.addEventListener("keydown", handleEsc);
-
+    titleRef.current.focus();
     return () => {
       window.removeEventListener("keydown", handleEsc);
     };
@@ -101,6 +102,7 @@ export default function TaskBox({
             </header>
           </div>
           <input
+            ref={titleRef}
             value={myTaskData.task_title}
             onChange={(e) =>
               setMyTaskData({ ...myTaskData, task_title: e.target.value })

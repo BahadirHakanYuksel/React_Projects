@@ -25,7 +25,10 @@ export default function Tasks() {
     setActiveFilterIndex(index);
   };
 
-  const closeTaskBox = () => setTaskBoxIsOpen(false);
+  const closeTaskBox = () => {
+    setTaskBoxIsOpen(false);
+    document.querySelector("html").style.overflowY = "auto";
+  };
 
   useEffect(() => {
     setActiveFilterIndex(0);
@@ -51,6 +54,7 @@ export default function Tasks() {
       }
     });
     setTasks(tasks);
+    setActiveFilterIndex(0);
     setChangeStatus(!changeStatus);
   };
 
@@ -70,7 +74,7 @@ export default function Tasks() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen bg-gradient-to-t to-slate-900 from-black flex flex-col gap-10 p-16 items-center relative"
+      className="flex flex-col gap-10 p-16 items-center relative"
     >
       <AnimatePresence>
         {taskBoxIsOpen && (
