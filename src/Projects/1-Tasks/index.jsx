@@ -80,6 +80,15 @@ export default function Tasks() {
   useEffect(() => {
     setFilteredTasks(tasks);
     localStorage.setItem("bhy-tasks", JSON.stringify(tasks));
+    setLengthOfStatus({
+      all: filteredTasks.length,
+      incomplate: filteredTasks.filter((task) => task.activeStatusIndex === 0)
+        .length,
+      draft: filteredTasks.filter((task) => task.activeStatusIndex === 1)
+        .length,
+      complate: filteredTasks.filter((task) => task.activeStatusIndex === 2)
+        .length,
+    });
   }, [changeStatus]);
 
   const changeFilter = (index) => {
