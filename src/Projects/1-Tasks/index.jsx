@@ -41,17 +41,18 @@ export default function Tasks() {
       setTasks(JSON.parse(localStorage.getItem("bhy-tasks")));
 
     const handleEnter = (event) => {
-      if (event.key === "Enter") {
-        setType("add");
-        setTaskBoxIsOpen(true);
-      }
+      // console.log(type);
+      // if (event.key === "Enter") {
+      //   setType("add");
+      //   setTaskBoxIsOpen(true);
+      // }
     };
 
-    window.addEventListener("keydown", handleEnter);
+    // window.addEventListener("keydown", handleEnter);
 
-    return () => {
-      window.removeEventListener("keydown", handleEnter);
-    };
+    // return () => {
+    //   window.removeEventListener("keydown", handleEnter);
+    // };
   }, []);
 
   useEffect(() => {
