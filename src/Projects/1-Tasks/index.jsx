@@ -340,6 +340,43 @@ export default function Tasks() {
             </div>
           )}
         </div>
+
+        <div className="fixed text-white right-10 top-10 bg-slate-700 bg-opacity-70 shadow-lg shadow-slate-400 p-5 rounded-lg flex flex-col items-center justify-center">
+          <i class="fa-solid fa-reply absolute -bottom-12 text-indigo-400 text-2xl rotate-90"></i>
+          <header className="text-lg font-medium mb-2.5">
+            Bahadır Hakan Yüksel
+          </header>
+          <div className="flex flex-wrap gap-2.5">
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/in/bahadir-hakan-yuksel/"
+              className="flex items-center justify-center text-lg bg-slate-500 hover:bg-slate-600 duration-200 w-8 h-8 rounded-md"
+            >
+              <i className="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a
+              target="_blank"
+              href="https://github.com/BahadirHakanYuksel"
+              className="flex items-center justify-center text-lg bg-slate-500 hover:bg-slate-600 duration-200 w-8 h-8 rounded-md"
+            >
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a
+              target="_blank"
+              href="https://github.com/BahadirHakanYuksel/React_Projects"
+              className="flex items-center justify-center text-lg bg-slate-500 hover:bg-slate-600 duration-200 w-8 h-8 rounded-md"
+            >
+              <i class="fa-solid fa-star"></i>
+            </a>
+            <a
+              target="_blank"
+              href="https://www.youtube.com/@bahadryuksel3987"
+              className="flex items-center justify-center text-lg bg-slate-500 hover:bg-slate-600 duration-200 w-8 h-8 rounded-md"
+            >
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </motion.div>
   );
