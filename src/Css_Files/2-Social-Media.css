@@ -1,0 +1,17 @@
+.social-media-navbar {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+}
+
+.social-media-main-grid {
+  display: grid;
+  grid-template-columns: 26% 48% 26%;
+}
+
+.social-media-content-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.profile-grid {
+  grid-template-columns: 26% 48% 26%;
+}
