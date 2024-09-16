@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import FastRegister from "../../components/FastRegister";
 
 export default function Register() {
   const options = ["Signup", "Login"];
@@ -36,6 +37,8 @@ export default function Register() {
           className="flex gap-5"
         >
           <div className="flex flex-col p-5 w-[60%] bg-gray-700 bg-opacity-25 gap-7 rounded-lg">
+            <FastRegister title={"Signup"} />
+            <div className="h-1 w-full rounded-full bg-gray-500"></div>
             <div className="grid grid-cols-2 items-center gap-5">
               <div className="flex flex-col gap-0.5">
                 <header className="font-medium text-lg">Name</header>
@@ -158,6 +161,7 @@ export default function Register() {
                 />
               </div>
             </div>
+
             <button className="flex items-center h-14 bg-gradient-to-r to-blue-600 from-sky-500 rounded-full text-2xl justify-center font-medium hover:to-blue-500 hover:from-sky-600 duration-200 border-2 border-solid border-transparent hover:border-white mt-2.5">
               Sign up
             </button>
@@ -229,7 +233,7 @@ export default function Register() {
               />
             </div>
             <div className="h-10 flex items-center justify-between">
-              <button className="bg-white bg-opacity-10 pr-2.5 h-8 text-white rounded-md overflow-hidden hover:bg-gray-800 flex gap-1.5 items-center">
+              <button className="bg-white bg-opacity-10 px-2.5 h-8 text-white rounded-md overflow-hidden hover:bg-gray-800 flex gap-1.5 items-center">
                 <div className="w-5 h-5 rounded-full border-2 border-solid border-white"></div>
                 <div>Remember me</div>
               </button>
@@ -237,6 +241,7 @@ export default function Register() {
                 <div>Forgot Password</div>
               </button>
             </div>
+            <FastRegister title={"Login"} />
             <button className="flex items-center h-14 bg-gradient-to-r to-blue-600 from-sky-500 rounded-full text-2xl justify-center font-medium hover:to-blue-500 hover:from-sky-600 duration-200 border-2 border-solid border-transparent hover:border-white mt-2.5">
               Login
             </button>

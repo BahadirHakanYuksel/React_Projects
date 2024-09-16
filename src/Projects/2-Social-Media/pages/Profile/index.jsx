@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import PostCard from "../../components/PostCard";
+import { openModalHandle } from "../../socialMediaUtils";
 
 export default function Profile() {
   const { user } = useSelector((state) => state.app);
@@ -41,7 +42,10 @@ export default function Profile() {
           <p>description</p>
           <div>Links</div>
           <div className="flex items-center justify-center gap-5">
-            <button className="gap-1.5 border-2 border-solid border-gray-500 h-10 flex items-center justify-start rounded-full overflow-hidden">
+            <button
+              onClick={() => openModalHandle(0)}
+              className="gap-1.5 border-2 border-solid border-gray-500 h-10 flex items-center justify-start rounded-full overflow-hidden"
+            >
               <div className="bg-gray-700 w-[58px] h-full flex items-center justify-center px-2.5">
                 1 K
               </div>

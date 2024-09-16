@@ -8,7 +8,7 @@ export default function PostCard({ id }) {
   };
 
   return (
-    <div className="bg-gray-800 bg-opacity-60 flex flex-col p-3 rounded-lg gap-3.5 max-h-[770px] overflow-hidden">
+    <div className="bg-gray-800 bg-opacity-60 flex flex-col p-4 rounded-lg gap-3.5 max-h-[770px] overflow-hidden">
       {/* line 1 */}
       <div className="flex items-center justify-between">
         <button className="flex items-center gap-1.5">

@@ -10,7 +10,7 @@ export default function Navbar() {
 
   const navMenu = [
     {
-      url: "/social-media/",
+      url: "/social-media",
       text: "Home",
       iconUrl: "",
     },
@@ -29,7 +29,7 @@ export default function Navbar() {
   return (
     <nav className="w-full h-14 social-media-navbar items-center justify-between mb-5">
       <button
-        onClick={() => navigate("/social-media/")}
+        onClick={() => navigate("/social-media")}
         className="text-2xl font-medium text-slate-400 flex items-center justify-start"
       >
         Social Media App

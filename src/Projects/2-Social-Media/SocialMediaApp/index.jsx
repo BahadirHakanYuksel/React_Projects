@@ -1,0 +1,17 @@
+import React from "react";
+import Navbar from "../components/Navbar";
+import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Modal from "../components/Modal";
+import { AnimatePresence } from "framer-motion";
+
+export default function SocialMediaApp() {
+  const { modalBox } = useSelector((state) => state.app);
+  return (
+    <div className="min-h-screen bg-black bg-opacity-80 text-white px-40 py-2.5">
+      <AnimatePresence>{modalBox && <Modal />}</AnimatePresence>
+      <Navbar />
+      <Outlet />
+    </div>
+  );
+}
