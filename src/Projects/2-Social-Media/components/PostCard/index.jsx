@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { openPopupHandle } from "../../socialMediaUtils";
 
 export default function PostCard({ id }) {
   const navigate = useNavigate();
@@ -15,7 +16,14 @@ export default function PostCard({ id }) {
           <div className="bg-gray-500 rounded-full w-11 h-11"></div>
           <header className="font-medium">Profile Name</header>
         </button>
-        <button className="bg-black h-8 px-1.5 rounded-md text-sky-500">
+        <button
+          onClick={() => {
+            openPopupHandle({
+              text: "Followed",
+            });
+          }}
+          className="bg-black h-8 px-1.5 rounded-md text-sky-500"
+        >
           Follow
         </button>
       </div>
