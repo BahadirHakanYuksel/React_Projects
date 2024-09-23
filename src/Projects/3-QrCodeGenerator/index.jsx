@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { div } from "framer-motion/client";
 import { useEffect, useState } from "react";
 
 export default function QrCodeGenerator() {
@@ -6,18 +7,20 @@ export default function QrCodeGenerator() {
   const [word, setWord] = useState("");
   const [bgColor, setBgColor] = useState("ffffff");
   const [color, setColor] = useState("000000");
-
+  const [loading, setLoading] = useState(false);
   const [qrCode, setQrCode] = useState("");
 
   useEffect(() => {
     setQrCode(
       `http://api.qrserver.com/v1/create-qr-code/?data=${word}&size=${400}x${400}&bgcolor=${bgColor}&color=${color}`
     );
+    setLoading(false);
   }, [word, bgColor, color]);
 
   function generate(e) {
     e.preventDefault();
     setWord(temp);
+    setLoading(true);
   }
 
   return (
@@ -31,7 +34,7 @@ export default function QrCodeGenerator() {
         <div className="flex flex-col w-full">
           <form onSubmit={generate} className="flex items-center h-12">
             <input
-              className="bg-white bg-opacity-10 border-2 border-solid border-gray-600 border-r-0 focus:border-gray-400 focus:border-r-0 duration-200 text-white h-full px-5 rounded-l-full"
+              className="bg-white bg-opacity-10 border-2 border-solid border-gray-600 border-r-0 focus:border-gray-400 focus:border-r-0 duration-200 text-white h-full px-3.5 rounded-l-md w-[220px]"
               type="text"
               value={temp}
               onChange={(e) => {
@@ -41,7 +44,7 @@ export default function QrCodeGenerator() {
             />
             <button
               type="submit"
-              className="h-full px-5 rounded-r-full bg-blue-700 border-2 border-solid border-blue-400 border-l-0 text-white"
+              className="h-full px-3.5 rounded-r-md bg-blue-700 border-2 border-solid border-blue-400 border-l-0 text-white w-[100px] duration-200 hover:bg-blue-600"
             >
               Generate
             </button>
@@ -73,7 +76,7 @@ export default function QrCodeGenerator() {
         </div>
         <div className="text-white flex flex-col w-full items-center">
           <AnimatePresence>
-            {word ? (
+            {word && !loading ? (
               <>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5 }}
