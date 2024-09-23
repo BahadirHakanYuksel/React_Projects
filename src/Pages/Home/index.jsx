@@ -35,6 +35,22 @@ export default function Home() {
       img_src: "/img/social-media.png",
       id: "bhy002",
     },
+    {
+      category: "react",
+      name: "QR Code Generator",
+      explanation: (
+        <p>
+          This is a -QR Code Generator- project and was done using{" "}
+          <span className="bg-blue-600 bg-opacity-20 text-blue-500 rounded-md px-1.5 py-0.5">
+            react
+          </span>
+          .
+        </p>
+      ),
+      url: "/qr-code-generator",
+      img_src: "/img/qr-code-generator.png",
+      id: "bhy003",
+    },
   ];
 
   return (

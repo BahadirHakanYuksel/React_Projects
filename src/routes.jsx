@@ -7,6 +7,7 @@ import SocialMedia from "./Projects/2-Social-Media";
 import Discover from "./Projects/2-Social-Media/pages/Discover";
 import Profile from "./Projects/2-Social-Media/pages/Profile";
 import Register from "./Projects/2-Social-Media/pages/Register";
+import QrCodeGenerator from "./Projects/3-QrCodeGenerator";
 
 export const routes = [
   {
@@ -46,6 +47,10 @@ export const routes = [
             element: "Post",
           },
         ],
+      },
+      {
+        path: "qr-code-generator",
+        element: <QrCodeGenerator />,
       },
       {
         path: "*",
