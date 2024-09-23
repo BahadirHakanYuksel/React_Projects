@@ -16,7 +16,7 @@ export default function Profile() {
   return (
     <div className="profile-grid grid">
       <div className="pr-5">
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-2.5 bg-gray-600">
           <header>Profile Menu</header>
         </div>
       </div>

@@ -9,7 +9,7 @@ import Popup from "../components/Popup";
 export default function SocialMediaApp() {
   const { modalBox, popup } = useSelector((state) => state.app);
   return (
-    <div className="min-h-screen bg-black bg-opacity-80 text-white px-40 py-2.5">
+    <div className="min-h-screen bg-black bg-opacity-80 text-white px-40 flex flex-col items-center">
       <AnimatePresence>{modalBox && <Modal />}</AnimatePresence>
       <AnimatePresence>{popup && <Popup />}</AnimatePresence>
       <Navbar />

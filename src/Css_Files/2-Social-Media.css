@@ -1,11 +1,11 @@
 .social-media-navbar {
   display: grid;
-  grid-template-columns: 25% 50% 25%;
+  grid-template-columns: 300px 600px 300px;
 }
 
 .social-media-main-grid {
   display: grid;
-  grid-template-columns: 26% 48% 26%;
+  grid-template-columns: 300px 600px 300px;
 }
 
 .social-media-content-grid {
@@ -13,5 +13,6 @@
 }
 
 .profile-grid {
-  grid-template-columns: 26% 48% 26%;
+  display: grid;
+  grid-template-columns: 300px 600px 300px;
 }

@@ -27,7 +27,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="w-full h-14 social-media-navbar items-center justify-between mb-5">
+    <nav className="h-16 social-media-navbar items-center justify-between mb-5 sticky bg-black z-10 top-0 left-0">
       <button
         onClick={() => navigate("/social-media")}
         className="text-2xl font-medium text-slate-400 flex items-center justify-start"
@@ -51,7 +51,7 @@ export default function Navbar() {
       <div className="flex items-center justify-end">
         <input
           type="search"
-          className="bg-gray-700 rounded-md h-9 text-white px-2.5 w-full"
+          className="bg-gray-700 rounded-md h-9 text-white px-2.5 w-[280px]"
           placeholder="Search User"
         />
       </div>

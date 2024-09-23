@@ -11,7 +11,7 @@ export default function Register() {
   const [activeGenderIndex, setActiveGenderIndex] = useState(0);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 w-full">
       <div className="flex gap-2.5">
         {options.map((option, i) => (
           <button
