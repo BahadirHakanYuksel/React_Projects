@@ -8,6 +8,7 @@ import Discover from "./Projects/2-Social-Media/pages/Discover";
 import Profile from "./Projects/2-Social-Media/pages/Profile";
 import Register from "./Projects/2-Social-Media/pages/Register";
 import QrCodeGenerator from "./Projects/3-QrCodeGenerator";
+import SongLyricsFinder from "./Projects/4-SongLyricsFinder";
 
 export const routes = [
   {
@@ -51,6 +52,10 @@ export const routes = [
       {
         path: "qr-code-generator",
         element: <QrCodeGenerator />,
+      },
+      {
+        path: "song-lyrics-finder",
+        element: <SongLyricsFinder />,
       },
       {
         path: "*",

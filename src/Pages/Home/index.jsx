@@ -51,6 +51,22 @@ export default function Home() {
       img_src: "/img/qr-code-generator.png",
       id: "bhy003",
     },
+    {
+      category: "react",
+      name: "Song Lyrics Finder",
+      explanation: (
+        <p>
+          This is a -Song Lyrics Finder- project and was done using{" "}
+          <span className="bg-blue-600 bg-opacity-20 text-blue-500 rounded-md px-1.5 py-0.5">
+            react
+          </span>
+          .
+        </p>
+      ),
+      url: "/song-lyrics-finder",
+      img_src: "/img/song-lyrics-finder.png",
+      id: "bhy004",
+    },
   ];
 
   return (
