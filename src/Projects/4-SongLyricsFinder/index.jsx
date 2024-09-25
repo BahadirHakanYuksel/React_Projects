@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -13,6 +14,8 @@ export default function SongLyricsFinder() {
     "Chasing Words, Following the Music!",
     "Don’t Get Lost in Melodies, Find the Lyrics!",
   ];
+
+  const musicPlaces = "Spotify, Youtube Music";
 
   useEffect(() => {
     if (artist === "" && song === "") {
@@ -51,6 +54,14 @@ export default function SongLyricsFinder() {
       setLyrics("");
       setSongTitle("");
     }
+  };
+
+  const handleSearch = (where = "spotify") => {
+    const url =
+      where === "spotify"
+        ? `https://open.spotify.com/search/${song}`
+        : `https://www.youtube.com/results?search_query=${song}`;
+    window.open(url, "_blank");
   };
 
   return (
@@ -101,6 +112,39 @@ export default function SongLyricsFinder() {
             <i className="fa-solid fa-magnifying-glass bg-gradient-to-tr to-blue-400 from-indigo-400 text-xl bg-clip-text text-transparent p-1"></i>
             <span>Search</span>
           </button>
+          {control && lyrics !== "" && !loading && (
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-2.5 flex-wrap mt-7 mb-1.5"
+            >
+              <div className="text-gray-400 text-lg font-medium">
+                Listen the <span className="text-gray-300">{songTitle}</span> on
+              </div>
+              {musicPlaces.split(", ").map((place, i) => (
+                <button
+                  onClick={() => handleSearch(place.toLowerCase())}
+                  key={i}
+                  className={classNames(
+                    "bg-blue-500 bg-opacity-30 text-blue-300 hover:bg-opacity-20 duration-200 px-2.5 h-12 rounded-lg flex items-center justify-center gap-1.5 border-2 border-solid border-[#535353]",
+                    {
+                      "!text-[#1db954] !bg-gradient-to-tr !to-[#212121] !from-[#121212] hover:!border-[#1db954]":
+                        place === "Spotify",
+                      "!text-[#FF0000] !bg-[#212121] hover:!border-[#FF0000]":
+                        place === "Youtube Music",
+                    }
+                  )}
+                >
+                  {place === "Spotify" ? (
+                    <i className="fa-brands fa-spotify text-2xl"></i>
+                  ) : (
+                    <i className="fa-solid fa-record-vinyl text-2xl"></i>
+                  )}
+                  <span className="text-white">{place}</span>
+                </button>
+              ))}
+            </motion.div>
+          )}
         </div>
         <AnimatePresence>
           {control ? (
@@ -108,7 +152,7 @@ export default function SongLyricsFinder() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex flex-col gap-5 mt-10"
+              className="flex flex-col gap-5"
             >
               {lyrics !== "" ? (
                 <>
