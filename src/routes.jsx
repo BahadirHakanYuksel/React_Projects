@@ -1,3 +1,4 @@
+import { path } from "framer-motion/m";
 import MainLayout from "./Layouts/MainLayout";
 import SocialMediaLayout from "./Layouts/SocialMediaLayout";
 import ErrorPage from "./Pages/ErrorPage";
@@ -9,6 +10,9 @@ import Profile from "./Projects/2-Social-Media/pages/Profile";
 import Register from "./Projects/2-Social-Media/pages/Register";
 import QrCodeGenerator from "./Projects/3-QrCodeGenerator";
 import SongLyricsFinder from "./Projects/4-SongLyricsFinder";
+import DailyPlan from "./Projects/5-DailyPlan";
+import OnlineShopping from "./Projects/6-OnlineShopping";
+import RockPapperScissors from "./Projects/7-Game-Rock-Paper-Scissors";
 
 export const routes = [
   {
@@ -56,6 +60,18 @@ export const routes = [
       {
         path: "song-lyrics-finder",
         element: <SongLyricsFinder />,
+      },
+      {
+        path: "daily-plan",
+        element: <DailyPlan />,
+      },
+      {
+        path: "online-shopping",
+        element: <OnlineShopping />,
+      },
+      {
+        path: "rock-paper-scissors-game",
+        element: <RockPapperScissors />,
       },
       {
         path: "*",

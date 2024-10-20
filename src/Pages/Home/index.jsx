@@ -1,3 +1,4 @@
+import { div } from "framer-motion/client";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       ),
       url: "/tasks",
       img_src: "/img/tasks.png",
+      complate: true,
       id: "bhy001",
     },
     {
@@ -33,6 +35,7 @@ export default function Home() {
       ),
       url: "/social-media",
       img_src: "/img/social-media.png",
+      complate: false,
       id: "bhy002",
     },
     {
@@ -49,6 +52,7 @@ export default function Home() {
       ),
       url: "/qr-code-generator",
       img_src: "/img/qr-code-generator.png",
+      complate: true,
       id: "bhy003",
     },
     {
@@ -65,7 +69,42 @@ export default function Home() {
       ),
       url: "/song-lyrics-finder",
       img_src: "/img/song-lyrics-finder.png",
+      complate: true,
       id: "bhy004",
+    },
+    {
+      category: "react",
+      name: "Online Shopping",
+      explanation: (
+        <p>
+          This is a -Online Shopping",- project and was done using{" "}
+          <span className="bg-blue-600 bg-opacity-20 text-blue-500 rounded-md px-1.5 py-0.5">
+            react
+          </span>
+          .
+        </p>
+      ),
+      url: "/online-shopping",
+      img_src: "",
+      complate: false,
+      id: "bhy005",
+    },
+    {
+      category: "react",
+      name: "Rock Paper Scissors",
+      explanation: (
+        <p>
+          This is a -Rock Paper Scissors- project and was done using{" "}
+          <span className="bg-blue-600 bg-opacity-20 text-blue-500 rounded-md px-1.5 py-0.5">
+            react
+          </span>
+          .
+        </p>
+      ),
+      url: "/rock-paper-scissors-game",
+      img_src: "/img/rock-paper-scissors-game.png",
+      complate: true,
+      id: "bhy006",
     },
   ];
 
@@ -82,6 +121,11 @@ export default function Home() {
             className="border-2 border-solid border-gray-600 rounded-lg min-h[200px] p-3.5 flex flex-col items-center hover:border-gray-500 duration-200 gap-2.5 relative"
             key={i}
           >
+            {!project.complate && (
+              <div className="absolute -top-4 -right-2 bg-gradient-to-bl to-red-500 from-black text-white font-medium rounded-md w-32 text-base h-8 flex items-center justify-center overflow-hidden">
+                Incomplated
+              </div>
+            )}
             <div className="absolute -left-4 -top-4 bg-gradient-to-tr to-sky-500 from-blue-800 text-blue-50 font-medium rounded-full w-8 text-base h-8 flex items-center justify-center overflow-hidden">
               {i + 1}
             </div>
